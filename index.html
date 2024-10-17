@@ -1,122 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="google-site-verification" content="ETaR_3NAwduPtMF96EouanIpv-cFxUhNCvUWKGNsDIw" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajay's Academy - Non-Profit Education</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Helvetica Neue', sans-serif;
-        }
-        .hero-pattern {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            height: 100vh;
-            background: #f1f1f1;
-            background-image: 
-                linear-gradient(90deg, transparent 50px, #ffb4b8 50px, #ffb4b8 52px, transparent 52px),
-                linear-gradient(#e1e1e1 0.1em, transparent 0.1em);
-            background-size: 100% 30px;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-        .popup.active {
-            display: block;
-        }
-    </style>
-</head>
-<body class="bg-gray-100 text-gray-900">
-    <header class="bg-black text-white p-4 fixed w-full z-10">
-        <nav class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Ajay's Academy</h1>
-            <ul class="flex space-x-4">
-                <li><a href="#hero" class="hover:text-gray-300 transition duration-300">Home</a></li>
-                <li><a href="#about" class="hover:text-gray-300 transition duration-300">About Us</a></li>
-                <li><a href="https://afishyke.github.io/courses/">Learn</a></li>
-            </ul>
-        </nav>
-    </header>
+import React, { useState } from 'react';
+import { Zap, Thermometer, Train, Magnet, Atom, Cpu, Flask, Lightbulb } from 'lucide-react';
 
-    <div id="aboutMePopup" class="popup">
-        <h2 class="text-2xl font-bold mb-4">Hi</h2>
-        <p>My name is Ajay Krishnan.</p>
-        <button id="closePopup" class="mt-4 bg-black text-white py-2 px-4 rounded hover:bg-gray-800 transition duration-300">Close</button>
+const SuperconductivityWebsite = () => {
+  const [activeSection, setActiveSection] = useState('intro');
+
+  const sections = {
+    intro: {
+      title: "Superconductivity 101",
+      content: "Dive into the world of zero electrical resistance and perfect diamagnetism. Superconductivity is not just cool, it's super cool!",
+      icon: <Zap className="w-8 h-8 text-yellow-400" />
+    },
+    history: {
+      title: "Discovery & Milestones",
+      content: "From Kamerlingh Onnes to high-temperature superconductors, uncover the electrifying journey of superconductivity.",
+      icon: <Lightbulb className="w-8 h-8 text-orange-400" />
+    },
+    physics: {
+      title: "Quantum Physics Behind It",
+      content: "Explore Cooper pairs, BCS theory, and the quantum dance that makes superconductivity possible.",
+      icon: <Atom className="w-8 h-8 text-green-400" />
+    },
+    temperature: {
+      title: "The Race to Room Temperature",
+      content: "Will we ever achieve room-temperature superconductors? Join the coolest race in physics!",
+      icon: <Thermometer className="w-8 h-8 text-blue-400" />
+    },
+    applications: {
+      title: "Superconductors in Action",
+      content: "From MRI machines to maglev trains, discover how superconductors are shaping our world.",
+      icon: <Train className="w-8 h-8 text-purple-400" />
+    },
+    magnetism: {
+      title: "Magnetic Marvels",
+      content: "Levitating magnets, flux pinning, and the mesmerizing world of superconducting magnets.",
+      icon: <Magnet className="w-8 h-8 text-red-400" />
+    },
+    computing: {
+      title: "Quantum Computing Revolution",
+      content: "Explore how superconducting qubits are powering the next generation of computing.",
+      icon: <Cpu className="w-8 h-8 text-indigo-400" />
+    },
+    future: {
+      title: "Future Frontiers",
+      content: "From energy grids to space exploration, peek into the superconducting future we're building.",
+      icon: <Flask className="w-8 h-8 text-pink-400" />
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-teal-900 text-white p-8">
+      <header className="text-center mb-12">
+        <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+          SuperConduct: The Cool Zone
+        </h1>
+        <p className="text-xl text-gray-300">Exploring the zero-resistance world of superconductivity</p>
+        <p className="mt-4 text-sm text-gray-400">Created by Abhishek Vasudev & Shabir</p>
+      </header>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {Object.entries(sections).map(([key, section]) => (
+          <div 
+            key={key}
+            className={`p-6 rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-105 ${
+              activeSection === key 
+                ? 'bg-white bg-opacity-20 shadow-lg shadow-purple-500/50' 
+                : 'bg-black bg-opacity-50 hover:bg-opacity-60'
+            }`}
+            onClick={() => setActiveSection(key)}
+          >
+            <div className="flex items-center mb-4">
+              {section.icon}
+              <h2 className="text-xl font-semibold ml-4">{section.title}</h2>
+            </div>
+            <p className="text-sm text-gray-300">{section.content}</p>
+          </div>
+        ))}
+      </div>
+
+      <footer className="mt-12 text-center text-gray-400">
+        <p>© 2024 SuperConduct: The Cool Zone | University of Quantum Coolness</p>
+      </footer>
     </div>
+  );
+};
 
-    <main>
-        <section id="hero" class="hero-pattern flex items-center justify-center">
-            <div class="hero-content text-center" data-aos="fade-up">
-                <h2 class="text-5xl font-bold mb-4 text-black">Ajay's Academy</h2>
-                <p class="text-xl mb-8 text-gray-800">Non-profit education for all</p>
-                <a href="#about" class="bg-black text-white py-2 px-6 rounded-full hover:bg-gray-800 transition duration-300">Learn More</a>
-            </div>
-        </section>
-        <section id="about" class="py-16 bg-white">
-            <div class="container mx-auto px-4" data-aos="fade-up">
-                <h2 class="text-3xl font-bold mb-8 text-center">About Ajay's Academy</h2>
-                <div class="max-w-3xl mx-auto">
-                    <p class="mb-4">Ajay's Academy is a non-profit educational institution dedicated to providing high-quality education to all, regardless of their background or financial situation. Our mission is to empower individuals through knowledge and skills that can transform their lives and communities.</p>
-                    <div class="text-center mt-8">
-                        <button id="aboutMeBtn" class="bg-black text-white py-2 px-4 rounded hover:bg-gray-800 transition duration-300">About Me</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer class="bg-black text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 Ajay's Academy. All rights reserved.</p>
-        </div>
-    </footer>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: true,
-        });
-
-        document.getElementById('aboutMeBtn').addEventListener('click', function() {
-            document.getElementById('aboutMePopup').classList.add('active');
-        });
-
-        document.getElementById('closePopup').addEventListener('click', function() {
-            document.getElementById('aboutMePopup').classList.remove('active');
-        });
-    </script>
-</body>
-</html>
-
+export default SuperconductivityWebsite;
