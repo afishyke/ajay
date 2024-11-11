@@ -1,110 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SuperConduct: The Cool Zone</title>
-  <!-- Importing Tailwind CSS from CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Import React and ReactDOM -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <!-- Import Babel -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Lucide React Icons -->
-  <script src="https://cdn.jsdelivr.net/npm/lucide-react/dist/lucide-react.umd.js"></script>
-</head>
-<body class="bg-gray-900 text-white">
-  <div id="root"></div>
+import React, { useState, useEffect } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Pen, BookOpen, Search, User, Star, ArrowRight, Heart, Share2, Trophy, Sparkles } from 'lucide-react';
 
-  <script type="text/babel">
-    const { useState } = React;
-    const { Zap, Thermometer, Train, Magnet, Atom, Cpu, Flask, Lightbulb } = window['lucideReact'];
+const ExtraordinaryBlog = () => {
+  const [activeSection, setActiveSection] = useState('featured');
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
-    const SuperconductivityWebsite = () => {
-      const [activeSection, setActiveSection] = useState('intro');
+  const [posts] = useState([
+    {
+      id: 1,
+      title: "fees 350 per head",
+      content: "Biriyani free for first 10 people...",
+      author: "Dr. Ajay",
+      date: "2024-11-10",
+      category: "Innovation",
+      image: "/api/placeholder/800/400",
+      likes: 245,
+      featured: true,
+      readTime: "5 min",
+      tags: ["Education", "Technology", "Food"]
+    },
+    {
+      id: 2,
+      title: "hehe",
+      content: "vene padiyeda",
+      author: "Team Ajay",
+      date: "2024-11-09",
+      category: "Success Stories",
+      image: "/api/placeholder/800/400",
+      likes: 189,
+      featured: true,
+      readTime: "8 min",
+      tags: ["Success", "Alumni", "Inspiration"]
+    }
+  ]);
 
-      const sections = {
-        intro: {
-          title: "Superconductivity 101",
-          content: "Dive into the world of zero electrical resistance and perfect diamagnetism. Superconductivity is not just cool, it's super cool!",
-          icon: <Zap className="w-8 h-8 text-yellow-400" />
-        },
-        history: {
-          title: "Discovery & Milestones",
-          content: "From Kamerlingh Onnes to high-temperature superconductors, uncover the electrifying journey of superconductivity.",
-          icon: <Lightbulb className="w-8 h-8 text-orange-400" />
-        },
-        physics: {
-          title: "Quantum Physics Behind It",
-          content: "Explore Cooper pairs, BCS theory, and the quantum dance that makes superconductivity possible.",
-          icon: <Atom className="w-8 h-8 text-green-400" />
-        },
-        temperature: {
-          title: "The Race to Room Temperature",
-          content: "Will we ever achieve room-temperature superconductors? Join the coolest race in physics!",
-          icon: <Thermometer className="w-8 h-8 text-blue-400" />
-        },
-        applications: {
-          title: "Superconductors in Action",
-          content: "From MRI machines to maglev trains, discover how superconductors are shaping our world.",
-          icon: <Train className="w-8 h-8 text-purple-400" />
-        },
-        magnetism: {
-          title: "Magnetic Marvels",
-          content: "Levitating magnets, flux pinning, and the mesmerizing world of superconducting magnets.",
-          icon: <Magnet className="w-8 h-8 text-red-400" />
-        },
-        computing: {
-          title: "Quantum Computing Revolution",
-          content: "Explore how superconducting qubits are powering the next generation of computing.",
-          icon: <Cpu className="w-8 h-8 text-indigo-400" />
-        },
-        future: {
-          title: "Future Frontiers",
-          content: "From energy grids to space exploration, peek into the superconducting future we're building.",
-          icon: <Flask className="w-8 h-8 text-pink-400" />
-        }
-      };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-      return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-teal-900 text-white p-8">
-          <header className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              SuperConduct: The Cool Zone
-            </h1>
-            <p className="text-xl text-gray-300">Exploring the zero-resistance world of superconductivity</p>
-            <p className="mt-4 text-sm text-gray-400">Created by Abhishek Vasudev & Shabir</p>
-          </header>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {Object.entries(sections).map(([key, section]) => (
-              <div 
-                key={key}
-                className={`p-6 rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-                  activeSection === key 
-                    ? 'bg-white bg-opacity-20 shadow-lg shadow-purple-500/50' 
-                    : 'bg-black bg-opacity-50 hover:bg-opacity-60'
-                }`}
-                onClick={() => setActiveSection(key)}
-              >
-                <div className="flex items-center mb-4">
-                  {section.icon}
-                  <h2 className="text-xl font-semibold ml-4">{section.title}</h2>
-                </div>
-                <p className="text-sm text-gray-300">{section.content}</p>
-              </div>
+  const ParallaxHeader = () => (
+    <div className="relative h-screen overflow-hidden">
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
+        style={{ transform: `translateY(${scrollPosition * 0.5}px)` }}
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-40" />
+      <div 
+        className="relative h-full flex items-center justify-center text-white"
+        style={{ transform: `translateY(${scrollPosition * 0.2}px)` }}
+      >
+        <div className="text-center space-y-6">
+          <h1 className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">
+            Ajay's Academy
+          </h1>
+          <p className="text-xl md:text-2xl text-blue-100">Transforming Education. Inspiring Minds.</p>
+          <div className="flex justify-center gap-4">
+            <button className="px-8 py-3 bg-white text-blue-600 rounded-full font-bold hover:bg-blue-100 transform hover:scale-105 transition-all">
+              Start Learning
+            </button>
+            <button className="px-8 py-3 border-2 border-white text-white rounded-full font-bold hover:bg-white hover:text-blue-600 transform hover:scale-105 transition-all">
+              Explore Courses
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="absolute bottom-0 w-full">
+        <svg className="w-full h-24 text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M0,100 C30,50 70,50 100,100" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+  );
+
+  const FeaturedPost = ({ post }) => (
+    <div 
+      className="relative group cursor-pointer overflow-hidden rounded-2xl"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      onClick={() => setSelectedPost(post)}
+    >
+      <div className="relative h-96">
+        <img 
+          src={post.image} 
+          alt={post.title}
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70" />
+        <div className="absolute bottom-0 p-8 text-white">
+          <div className="flex items-center space-x-2 mb-4">
+            {post.tags.map(tag => (
+              <span key={tag} className="px-3 py-1 bg-blue-500 bg-opacity-50 rounded-full text-sm">
+                {tag}
+              </span>
             ))}
           </div>
-
-          <footer className="mt-12 text-center text-gray-400">
-            <p>© 2024 SuperConduct: The Cool Zone | University of Quantum Coolness</p>
-          </footer>
+          <h2 className="text-3xl font-bold mb-2 group-hover:text-blue-300 transition-colors">
+            {post.title}
+          </h2>
+          <p className="text-gray-200 mb-4">{post.content}</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center">
+                <User size={20} className="mr-2" />
+                <span>{post.author}</span>
+              </div>
+              <div className="flex items-center">
+                <Heart size={20} className="mr-2" />
+                <span>{post.likes}</span>
+              </div>
+            </div>
+            <button className="flex items-center space-x-2 px-4 py-2 bg-blue-500 rounded-full hover:bg-blue-600 transition-colors">
+              <span>Read More</span>
+              <ArrowRight size={16} />
+            </button>
+          </div>
         </div>
-      );
-    };
+      </div>
+    </div>
+  );
 
-    ReactDOM.render(<SuperconductivityWebsite />, document.getElementById('root'));
-  </script>
-</body>
-</html>
+  return (
+    <div className="min-h-screen bg-white">
+      <ParallaxHeader />
+      
+      <main className="max-w-7xl mx-auto px-4 py-16">
+        <div className="flex justify-center mb-12">
+          {['featured', 'latest', 'trending'].map((section) => (
+            <button
+              key={section}
+              onClick={() => setActiveSection(section)}
+              className={`px-6 py-3 mx-2 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105
+                ${activeSection === section 
+                  ? 'bg-blue-600 text-white shadow-lg' 
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            >
+              {section.charAt(0).toUpperCase() + section.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {posts.filter(post => post.featured).map(post => (
+            <FeaturedPost key={post.id} post={post} />
+          ))}
+        </div>
+
+        <div className="fixed bottom-8 right-8 flex flex-col space-y-4">
+          <button className="p-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all">
+            <Pen size={24} />
+          </button>
+          <button className="p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all">
+            <Share2 size={24} />
+          </button>
+        </div>
+      </main>
+
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center">
+            <Sparkles size={48} className="mx-auto text-blue-600" />
+            <h3 className="text-2xl font-bold mt-4">Innovation Hub</h3>
+            <p className="text-gray-600 mt-2">Cutting-edge learning technologies</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ExtraordinaryBlog;
